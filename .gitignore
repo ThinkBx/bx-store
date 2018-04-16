@@ -1,0 +1,14 @@
+# Created by .ignore support plugin (hsz.mobi)
+### Example user template template
+### Example user template
+
+# IntelliJ project files
+.idea
+*.iml
+out
+gen
+/bx-store-member/target/
+/bx-store-eurekaserver/target/
+/bx-store-common/target/
+/bx-store-api/bx-store-member-api/target/
+/.idea/
