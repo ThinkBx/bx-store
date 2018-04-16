@@ -1,4 +1,4 @@
-package com.bxcloud.service;
+package com.bxcloud.api.service;
 
 import com.bxcloud.ResponseBase;
 import org.springframework.web.bind.annotation.RequestMapping;

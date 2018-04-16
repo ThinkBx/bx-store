@@ -1,4 +1,4 @@
-package com.bxcloud.service;
+package com.bxcloud.api.service;
 
 import com.bxcloud.BaseController;
 import com.bxcloud.ResponseBase;
