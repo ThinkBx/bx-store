@@ -12,3 +12,4 @@ gen
 /bx-store-common/target/
 /bx-store-api/bx-store-member-api/target/
 /.idea/
+/bx-store-pc-web/target/
