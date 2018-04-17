@@ -16,4 +16,14 @@ public interface Constants {
     Integer HTTP_RES_CODE_200 = 200;
     // 系统错误
     Integer HTTP_RES_CODE_500 = 500;
+
+    // 发送邮件
+    String MSG_EMAIL ="email";
+
+    // 会员token
+    String TOKEN_MEMBER ="TOKEN_MEMBER";
+    // 用户有效期 90天
+    Long TOKEN_MEMBER_TIME =(long) (60*60*24*90);
+
+
 }

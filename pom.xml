@@ -13,6 +13,8 @@
         <module>bx-store-api</module>
         <module>bx-store-member-api</module>
         <module>bx-store-member</module>
+        <module>bx-store-message</module>
+        <module>bx-store-pc-web</module>
     </modules>
     <packaging>pom</packaging>
 

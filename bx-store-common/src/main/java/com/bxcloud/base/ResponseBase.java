@@ -1,4 +1,4 @@
-package com.bxcloud;
+package com.bxcloud.base;
 
 import lombok.Getter;
 import lombok.Setter;
