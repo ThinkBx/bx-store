@@ -13,15 +13,6 @@
         <module>bx-store-member-api</module>
     </modules>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.bxcloud</groupId>
-            <artifactId>bx-store-common</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
-    </dependencies>
-
     <artifactId>bx-store-api</artifactId>
 
 

@@ -11,7 +11,6 @@
         <module>bx-store-common</module>
         <module>bx-store-eurekaserver</module>
         <module>bx-store-api</module>
-        <module>bx-store-member-api</module>
         <module>bx-store-member</module>
         <module>bx-store-message</module>
         <module>bx-store-pc-web</module>
@@ -154,6 +153,13 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
+        <sourceDirectory>src/main/java</sourceDirectory>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
     </build>
 
 
