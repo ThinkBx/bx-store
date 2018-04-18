@@ -14,6 +14,7 @@
         <module>bx-store-member</module>
         <module>bx-store-message</module>
         <module>bx-store-pc-web</module>
+        <module>bx-store-weixin</module>
     </modules>
     <packaging>pom</packaging>
 
