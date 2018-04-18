@@ -1,7 +1,9 @@
 package com.bxcloud.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.bxcloud.base.TextMessage;
 import com.bxcloud.utils.CheckUtil;
+import com.bxcloud.utils.HttpClientUtil;
 import com.bxcloud.utils.XmlUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +21,9 @@ import java.util.Map;
 @RestController
 public class DispatcherController {
 
+    //青云客智能聊天机器人API
+    private static final String REQUESTURL = "http://api.qingyunke.com/api.php?key=free&appid=0&msg=";
+
     // 服务器验证接口地址
     @RequestMapping(value = "/dispatcher", method = RequestMethod.GET)
     public String dispatcherGet(String signature, String timestamp, String nonce, String echostr) {
@@ -30,7 +35,6 @@ public class DispatcherController {
         }
         return echostr;
     }
-
 
     //微信动作推送
     @RequestMapping(value = "/dispatcher", method = RequestMethod.POST)
@@ -52,18 +56,29 @@ public class DispatcherController {
                 String fromUserName = resultMap.get("FromUserName");
                 //消息内容
                 String content = resultMap.get("Content");
+
+                String resultJson = HttpClientUtil.doGet(REQUESTURL + content);
+                JSONObject jsonObject = JSONObject.parseObject(resultJson);
+                Integer resultCode = jsonObject.getInteger("result");
                 String msg = null;
-                log.info("###给微信发送消息###msg:" + msg);
+
+                if (resultCode == 0) {
+                    String resultContent = jsonObject.getString("content");
+                    msg = setText(resultContent, toUserName, fromUserName);
+                } else {
+                    msg = setText("我现在有点忙,稍后回复您!", toUserName, fromUserName);
+                }
+
+                /*log.info("###给微信发送消息###msg:" + msg);
                 if ("蚂蚁课堂".contains(content)) {
                     msg = setText("", toUserName, fromUserName);
-                }
+                }*/
                 writer.println(msg);
                 break;
             default:
                 break;
         }
     }
-
 
     public String setText(String content, String fromUserName, String toUserName) {
         TextMessage textMessage = new TextMessage();
@@ -75,7 +90,6 @@ public class DispatcherController {
         // 将实体类转换成xml格式
         String msg = XmlUtils.messageToXml(textMessage);
         return msg;
-
     }
 
 
