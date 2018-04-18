@@ -1,6 +1,6 @@
-package com.bxcloud.com.bxcloud.utils;
+package com.bxcloud.utils;
 
-import com.bxcloud.com.bxcloud.constants.Constants;
+import com.bxcloud.constants.Constants;
 
 import java.util.UUID;
 

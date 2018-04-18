@@ -30,6 +30,11 @@
             <artifactId>spring-cloud-starter-feign</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.sdk4j</groupId>
+            <artifactId>sdk4j</artifactId>
+            <version>1.0</version>
+        </dependency>
 
 
     </dependencies>

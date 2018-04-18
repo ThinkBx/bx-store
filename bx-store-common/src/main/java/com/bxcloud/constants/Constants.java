@@ -1,4 +1,4 @@
-package com.bxcloud.com.bxcloud.constants;
+package com.bxcloud.constants;
 
 public interface Constants {
 
@@ -17,6 +17,9 @@ public interface Constants {
     // 系统错误
     Integer HTTP_RES_CODE_500 = 500;
 
+    //未关联QQ账号
+    Integer HTTP_RES_CODE_201 = 201;
+
     // 发送邮件
     String MSG_EMAIL ="email";
 
@@ -24,6 +27,10 @@ public interface Constants {
     String TOKEN_MEMBER ="TOKEN_MEMBER";
     // 用户有效期 90天
     Long TOKEN_MEMBER_TIME =(long) (60*60*24*90);
+
+    // cookie 会员 totoken 名称
+    String COOKIE_MEMBER_TOKEN ="cookie_member_token";
+    int COOKIE_TOKEN_MEMBER_TIME =(60*60*24*90);
 
 
 }

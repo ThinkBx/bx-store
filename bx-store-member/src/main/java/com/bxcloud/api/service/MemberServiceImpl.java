@@ -3,9 +3,9 @@ package com.bxcloud.api.service;
 import com.alibaba.fastjson.JSONObject;
 import com.bxcloud.base.BaseApiService;
 import com.bxcloud.base.ResponseBase;
-import com.bxcloud.com.bxcloud.constants.Constants;
-import com.bxcloud.com.bxcloud.utils.MD5Util;
-import com.bxcloud.com.bxcloud.utils.TokenUtils;
+import com.bxcloud.constants.Constants;
+import com.bxcloud.utils.MD5Util;
+import com.bxcloud.utils.TokenUtils;
 import com.bxcloud.dao.UserDao;
 import com.bxcloud.entity.User;
 import com.bxcloud.mq.RegisterMailboxProducer;
@@ -15,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
@@ -96,29 +97,30 @@ public class MemberServiceImpl extends BaseApiService implements MemberService {
         if (StringUtils.isEmpty(password)) {
             return setResultError("密码不能为空!");
         }
-
         // 2.数据库查找账号密码是否正确
         String newPassWrod = MD5Util.MD5(password);
         User userEntity = userDao.login(username, newPassWrod);
-        if (userEntity == null) {
+        return setLogin(userEntity);
+    }
+
+    private ResponseBase setLogin(User user) {
+        if (user == null) {
             return setResultError("账号或者密码不能正确");
         }
         // 3.如果账号密码正确，对应生成token
         String memberToken = TokenUtils.getMemberToken();
         // 4.存放在redis中，key为token value 为 userid
-        Integer userId = userEntity.getId();
+        Integer userId = user.getId();
         log.info("####用户信息token存放在redis中... key为:{},value", memberToken, userId);
         baseRedisService.setString(memberToken, userId + "", Constants.TOKEN_MEMBER_TIME);
-
         // 5.直接返回token
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("memberToken", memberToken);
         return setResultSuccess(jsonObject);
-
     }
 
     @Override
-    public ResponseBase findUserByToken(String token) {
+    public ResponseBase findUserByToken(@RequestParam("token") String token) {
         // 1.验证参数
         if (StringUtils.isEmpty(token)) {
             return setResultError("token不能为空!");
@@ -136,5 +138,50 @@ public class MemberServiceImpl extends BaseApiService implements MemberService {
         }
         userEntity.setPassword(null);
         return setResultSuccess(userEntity);
+    }
+
+    @Override
+    public ResponseBase findUserByOpenId(@RequestParam("openid") String openid) {
+        // 1.验证参数
+        if (StringUtils.isEmpty(openid)) {
+            return setResultError("openid不能为空1");
+        }
+        // 2.使用openid 查询数据库 user表对应数据信息
+        User userEntity = userDao.findUserByOpenId(openid);
+        if (userEntity == null) {
+            return setResultError(Constants.HTTP_RES_CODE_201, "该openid没有关联");
+        }
+        // 3.自动登录
+        return setLogin(userEntity);
+    }
+
+    @Override
+    public ResponseBase qqLogin(@RequestBody User user) {
+        // 1.验证参数
+        String openid = user.getOpenid();
+        if (StringUtils.isEmpty(openid)) {
+            return setResultError("openid不能为空!");
+        }
+        // 2.先进行账号登录
+        ResponseBase setLogin = login(user);
+        if (!setLogin.getCode().equals(Constants.HTTP_RES_CODE_200)) {
+            return setLogin;
+        }
+        // 3.自动登录
+        JSONObject jsonObjcet = (JSONObject) setLogin.getData();
+        // 4. 获取token信息
+        String memberToken = jsonObjcet.getString("memberToken");
+        ResponseBase userToken = findUserByToken(memberToken);
+        if (!userToken.getCode().equals(Constants.HTTP_RES_CODE_200)) {
+            return userToken;
+        }
+        User userEntity = (User) userToken.getData();
+        // 5.修改用户openid
+        Integer userId = userEntity.getId();
+        Integer updateByOpenIdUser = userDao.updateUserByOpenId(openid, userId);
+        if (updateByOpenIdUser <= 0) {
+            return setResultError("QQ账号管理失败!");
+        }
+        return setLogin;
     }
 }

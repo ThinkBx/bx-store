@@ -1,4 +1,4 @@
-package com.bxcloud.com.bxcloud.utils;
+package com.bxcloud.utils;
 
 import java.security.MessageDigest;
 

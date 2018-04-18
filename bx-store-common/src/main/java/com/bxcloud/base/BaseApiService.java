@@ -1,12 +1,16 @@
 package com.bxcloud.base;
 
-import com.bxcloud.com.bxcloud.constants.Constants;
+import com.bxcloud.constants.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class BaseApiService {
 
     @Autowired
     protected BaseRedisService baseRedisService;
+
+    public ResponseBase setResultError(Integer code,String msg) {
+        return setResult(code, msg, null);
+    }
 
     // 返回成功 ,data值为null
     public ResponseBase setResultSuccess() {

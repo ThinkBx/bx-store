@@ -15,4 +15,6 @@ public class User {
     private String email;
     private Date created;
     private Date updated;
+    private String openid;
+
 }

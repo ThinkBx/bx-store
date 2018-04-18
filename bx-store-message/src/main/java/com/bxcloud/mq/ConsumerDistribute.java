@@ -2,7 +2,7 @@ package com.bxcloud.mq;
 
 import com.alibaba.fastjson.JSONObject;
 import com.bxcloud.adapter.MessageAdapter;
-import com.bxcloud.com.bxcloud.constants.Constants;
+import com.bxcloud.constants.Constants;
 import com.bxcloud.email.serive.EmailService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
