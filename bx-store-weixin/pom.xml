@@ -11,5 +11,13 @@
 
     <artifactId>bx-store-weixin</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.bxcloud</groupId>
+            <artifactId>bx-store-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
 
 </project>
