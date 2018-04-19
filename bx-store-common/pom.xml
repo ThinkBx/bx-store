@@ -11,12 +11,28 @@
 
     <artifactId>bx-store-common</artifactId>
 
+    <properties>
+        <weixin-java-mp.version>2.8.0</weixin-java-mp.version>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.github.binarywang</groupId>
+            <artifactId>weixin-java-mp</artifactId>
+            <version>${weixin-java-mp.version}</version>
+        </dependency>
+
+    </dependencies>
+
     <!--<dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
     </dependencies>-->
+
+
 
 
 </project>
