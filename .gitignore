@@ -13,3 +13,4 @@ gen
 /bx-store-api/bx-store-member-api/target/
 /.idea/
 /bx-store-pc-web/target/
+/bx-store-weixin/target/
