@@ -36,6 +36,12 @@
             <version>1.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.bxcloud</groupId>
+            <artifactId>bx-store-pay-api</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
 
     </dependencies>
 
